@@ -28,11 +28,35 @@ function Main() {
             setInputValue(""); // Clear input after search
         }
     };
-    
+
     // Handle Enter key press in input field
     const handleKeyDown = (event) => {
         if (event.key === "Enter") {
             handleSearch();
+        }
+    };
+
+    const getWeatherImage = () => {
+        if (!weather || !weather.weather || weather.weather.length === 0) {
+            return cloudyImage; // Default image if no data
+        }
+    
+        const condition = weather.weather[0].main;
+        console.log("Weather condition:", condition); // Debugging log
+    
+        switch (condition) {
+            case "Clear":
+                return sunImage;
+            case "Clouds":
+                return cloudImage;
+            case "Rain":
+                return rainImage;
+            case "Snow":
+                return snowImage;
+            case "Wind":
+                return windyImage;
+            default:
+                return cloudyImage;
         }
     };
     
@@ -50,10 +74,11 @@ function Main() {
                 />
                 <button onClick={handleSearch}><img src={searchImage} alt="search icon" /></button>
             </div>
-        </div>
+        
 
             {weather && weather.main && (
                 <div className="weather">
+                    <img src={getWeatherImage()} className="weather-icon" alt="weather icon" />
                     <h1 className='temp'>{Math.round(weather.main.temp)}°C</h1>
                     <h2 className="city">{weather.name}</h2>
                     <div className='details'>
@@ -74,6 +99,8 @@ function Main() {
                     </div>
                 </div>
             )}
+
+        </div>
 
 {
 

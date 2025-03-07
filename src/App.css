@@ -1,5 +1,5 @@
 .card {
-  width: 90%;
+  width: 100%;
   max-width: 470px;
   background: linear-gradient(135deg, #00feba, #5b548a);
   color: #fff;
@@ -42,6 +42,7 @@
 .search button img {
   width: 30px;
 }
+
 
 .weather-icon {
   width: 170px;
