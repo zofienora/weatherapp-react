@@ -32,5 +32,15 @@ h1 {
 }
 
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.icons {
+  color: white;
+  font-size: 8px;
+}
+
 
 
