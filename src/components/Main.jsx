@@ -6,11 +6,28 @@ import snowImage from '../assets/snow.png';
 import windyImage from '../assets/windy.png';
 import cloudyImage from '../assets/cloudy.png';
 import humidityImage from '../assets/humidity.png';
-
-
+import { useState, useEffect } from "react";
 
 
 function Main() {
+    const [weather, setWeather] = useState(null);
+    const [city, setCity] = useState("Erlangen"); // Default city
+    const API_KEY = "c16060cd6497938e0dc8543523ab8635";
+
+    useEffect(() => {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`)
+            .then((response) => response.json())
+            .then((data) => setWeather(data))
+            .catch((error) => console.error("Error fetching data:", error));
+    }, [city]); // Runs when 'city' changes
+
+    const handleSearch = () => {
+        const input = document.querySelector("input").value;
+        if (input) {
+            setCity(input);
+        }
+    };
+    
     return (
       <main className="main-container container">
         <div className="card">
@@ -42,6 +59,8 @@ function Main() {
                 </div>
             </div>
         </div>
+
+
       </main>
     );
   }
