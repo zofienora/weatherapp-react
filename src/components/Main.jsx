@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 function Main() {
     const [weather, setWeather] = useState(null);
     const [city, setCity] = useState("Erlangen"); // Default city
+    const [inputValue, setInputValue] = useState(""); // To store input field value
     const API_KEY = "c16060cd6497938e0dc8543523ab8635";
 
     useEffect(() => {
@@ -22,9 +23,16 @@ function Main() {
     }, [city]); // Runs when 'city' changes
 
     const handleSearch = () => {
-        const input = document.querySelector("input").value;
-        if (input) {
-            setCity(input);
+        if (inputValue) {
+            setCity(inputValue);
+            setInputValue(""); // Clear input after search
+        }
+    };
+    
+    // Handle Enter key press in input field
+    const handleKeyDown = (event) => {
+        if (event.key === "Enter") {
+            handleSearch();
         }
     };
     
@@ -32,37 +40,46 @@ function Main() {
       <main className="main-container container">
         <div className="card">
             <div className="search">
-                <input type="text" placeholder="Enter city name..." spellCheck="false"/>
-                <button><img src={searchImage} alt="search icon" /></button>
-            </div>
-            <div className="weather">
-                <img src={sunImage} className="weather-icon" alt="sun" />
-                <h1 className='temp' >14 °C</h1>
-                <h2 className="city">Erlangen</h2>
-                <div className='details' >
-                    <div className="col">
-                        <img src={humidityImage} alt="humidity" />
-                        <div>
-                            <p className='humidity' >50%</p>
-                            <p>Humidity</p>
-                        </div>
-                    </div>
-
-                    <div className="col">
-                        <img src={windyImage} alt="wind" />
-                        <div>
-                            <p className='wind' >15 km/h</p>
-                            <p>Wind Speed</p>
-                        </div>
-                    </div>
-
-                </div>
+                <input 
+                    type="text" 
+                    placeholder="Enter city name..." 
+                    spellCheck="false"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)} // Updates state
+                    onKeyDown={handleKeyDown} // Listens for Enter key
+                />
+                <button onClick={handleSearch}><img src={searchImage} alt="search icon" /></button>
             </div>
         </div>
 
+            {weather && weather.main && (
+                <div className="weather">
+                    <h1 className='temp'>{Math.round(weather.main.temp)}°C</h1>
+                    <h2 className="city">{weather.name}</h2>
+                    <div className='details'>
+                        <div className="col">
+                            <img src={humidityImage} alt="humidity" />
+                            <div>
+                                <p className='humidity'>{weather.main.humidity}%</p>
+                                <p>Humidity</p>
+                            </div>
+                        </div>
+                        <div className="col">
+                            <img src={windyImage} alt="wind" />
+                            <div>
+                                <p className='wind'>{Math.round(weather.wind.speed)} km/h</p>
+                                <p>Wind Speed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
-      </main>
-    );
-  }
+{
+
+}      </main>
+);
+}
   
-  export default Main;
+
+export default Main;
