@@ -23,6 +23,7 @@ body {
   width: 80%;
   max-width: 1200px;
   margin: 0 auto;
+  border: 2px solid red;
 }
 
 h1 {
