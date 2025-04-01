@@ -13,7 +13,7 @@ function Main() {
     const [weather, setWeather] = useState(null);
     const [city, setCity] = useState("Erlangen"); // Default city
     const [inputValue, setInputValue] = useState(""); // To store input field value
-    const API_KEY = "c16060cd6497938e0dc8543523ab8635";
+    const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
     useEffect(() => {
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`)
